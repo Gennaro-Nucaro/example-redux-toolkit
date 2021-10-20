@@ -16,7 +16,7 @@ export default function Component() {
   } = useGetPokemonByNameQuery(pokemon);
   // Individual hooks are also accessible under the generated endpoints:
   // const { data, error, isLoading } = pokemonApi.endpoints.getPokemonByName.useQuery('bulbasaur')
-
+  /*
   console.groupCollapsed("normal check");
   console.log(data, "->data", error, "->error", isLoading, "isLoading");
   console.groupEnd();
@@ -31,7 +31,7 @@ export default function Component() {
     "isUninitialized"
   );
   console.groupEnd();
-
+*/
   const cerca = () => {
     if (value !== "") setPokemon(value);
   };

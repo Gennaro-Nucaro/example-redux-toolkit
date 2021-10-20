@@ -32,7 +32,7 @@ export default function TodoComponent() {
     dispatch(changeStatusTodo(ele));
   };
   return (
-    <div style={{ textAlign: "center", fontSize: 24 }}>
+    <div style={{ textAlign: "center", fontSize: 24, marginRight: 40 }}>
       <h3>Sincrona Todolist </h3>
       <input
         name="inputTodo"
