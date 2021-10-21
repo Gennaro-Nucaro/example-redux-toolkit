@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import axios from "axios";
 
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import {
@@ -9,6 +8,7 @@ import {
   getTodolist,
   deleteAsyncTodo,
   Todo,
+  checkedAsyncTodo,
 } from "./todoSlice";
 
 export default function TodoComponent() {
@@ -38,6 +38,10 @@ export default function TodoComponent() {
     dispatch(deleteAsyncTodo(id));
   };
 
+  const handleTodo = (ele: Todo) => {
+    dispatch(checkedAsyncTodo(ele));
+  };
+
   return (
     <div style={{ textAlign: "center", fontSize: 24 }}>
       <h3>Asincrona Todolist </h3>
@@ -59,7 +63,7 @@ export default function TodoComponent() {
               <input
                 checked={ele.status}
                 name={ele.name}
-                // onChange={() => handleTodo(ele)}
+                onChange={() => handleTodo(ele)}
                 type="checkbox"
               />
               {ele.name}

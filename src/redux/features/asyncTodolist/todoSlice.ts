@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 export interface Todo {
-    id: string | number;
+    id: string;
     name: string;
     status: boolean;
 }
@@ -33,7 +33,14 @@ export const addAsyncTodo = createAsyncThunk(
     async (newTodo: Todo) => {
         const { data } = await axios.post(`http://localhost:3004/todos`, newTodo)
         return data
+    }
+)
 
+export const checkedAsyncTodo = createAsyncThunk(
+    'AsyncTodolist/checkedTodo',
+    async (todo: Todo) => {
+        await axios.put(`http://localhost:3004/todos/${todo.id}`, { ...todo, status: !todo.status })
+        return todo
     }
 )
 
@@ -71,8 +78,20 @@ export const todoSlice = createSlice({
         //delete todo
         builder.addCase(deleteAsyncTodo.fulfilled, (state, action) => {
             state.ajax = 'idle'
-            //@ts-ignore
-            state.todos = [...state.todos.filter(ele => ele.id !== action.payload)]
+            state.todos = [...state.todos.filter((ele: Todo) => ele.id !== action.payload)]
+        })
+        //checked Todo
+
+        builder.addCase(checkedAsyncTodo.fulfilled, (state, action) => {
+            state.ajax = 'idle'
+            state.todos =
+                [...state.todos.map((ele: Todo) => {
+                    if (ele.id === action.payload.id) {
+                        return { ...ele, status: !ele.status }
+                    } else {
+                        return ele
+                    }
+                })]
         })
     }
 });
